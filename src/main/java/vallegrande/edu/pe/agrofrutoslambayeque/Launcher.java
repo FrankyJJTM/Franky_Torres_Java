@@ -43,7 +43,7 @@ public class Launcher extends Application {
 
     private String obtenerUrlDescargaDesdeNube() {
         // Aquí pegas el enlace directo de la Release que acabas de publicar en GitHub:
-        return "https://github.com/FrankyJJTM/AgrofrutosLambayeque-Desktop/releases/download/v1.0.0/AgrofrutosLambayeque.jar";
+        return "https://github.com/FrankyJJTM/AgrofrutosLambayeque-Desktop/releases/download/v1.0.1/AgrofrutosLambayeque.jar";
     }
 
     private void mostrarAlertaActualizacion(String nuevaVersion) {
