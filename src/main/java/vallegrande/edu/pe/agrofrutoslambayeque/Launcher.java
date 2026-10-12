@@ -10,7 +10,7 @@ import java.io.IOException;
 public class Launcher extends Application {
 
     // Versión fija que tiene este ejecutable .jar local
-    private static final String VERSION_LOCAL = "1.0.0";
+    private static final String VERSION_LOCAL = "1.0.1";
 
     @Override
     public void start(Stage primaryStage) {

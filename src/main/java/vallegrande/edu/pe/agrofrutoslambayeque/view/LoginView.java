@@ -12,6 +12,9 @@ import vallegrande.edu.pe.agrofrutoslambayeque.model.UsuarioDao;
 
 public class LoginView extends Application {
 
+    // Define aquí la versión local actual
+    private static final String APP_VERSION = "v1.0.0";
+
     @Override
     public void start(Stage stage) {
         VBox root = new VBox(12);
@@ -40,6 +43,10 @@ public class LoginView extends Application {
         Label lblMsg = new Label();
         lblMsg.setStyle("-fx-text-fill: #e74c3c; -fx-font-weight: bold;");
 
+        // Etiqueta visual para la versión
+        Label lblVersion = new Label("Versión " + APP_VERSION);
+        lblVersion.setStyle("-fx-font-size: 11px; -fx-text-fill: #7f8c8d; -fx-padding: 10 0 0 0;");
+
         UsuarioDao usuarioDao = new UsuarioDao();
 
         btnLogin.setOnAction(e -> {
@@ -54,16 +61,16 @@ public class LoginView extends Application {
             Usuario usuario = usuarioDao.autenticar(u, p);
             if (usuario != null) {
                 MainView mainView = new MainView(usuario);
-                mainView.start(stage); // Abre MainView reemplazando la escena en el mismo escenario (Stage)
+                mainView.start(stage);
             } else {
                 lblMsg.setText("Credenciales incorrectas.");
             }
         });
 
-        root.getChildren().addAll(lblTitulo, lblSubtitulo, txtUser, txtPass, btnLogin, lblMsg);
+        root.getChildren().addAll(lblTitulo, lblSubtitulo, txtUser, txtPass, btnLogin, lblMsg, lblVersion);
 
-        Scene scene = new Scene(root, 360, 380);
-        stage.setTitle("Login - Agrofrutos Lambayeque");
+        Scene scene = new Scene(root, 360, 410);
+        stage.setTitle("Login - Agrofrutos Lambayeque (" + APP_VERSION + ")");
         stage.setScene(scene);
         stage.show();
     }
