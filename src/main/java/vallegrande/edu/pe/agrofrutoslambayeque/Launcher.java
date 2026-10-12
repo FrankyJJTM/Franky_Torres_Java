@@ -42,8 +42,8 @@ public class Launcher extends Application {
     }
 
     private String obtenerUrlDescargaDesdeNube() {
-        // AQUÍ consultas el enlace de GitHub Releases / Google Drive grabado en la BD
-        return "https://midominio.com/AgrofrutosLambayeque.jar";
+        // Aquí pegas el enlace directo de la Release que acabas de publicar en GitHub:
+        return "https://github.com/FrankyJJTM/AgrofrutosLambayeque-Desktop/releases/download/v1.0.0/AgrofrutosLambayeque.jar";
     }
 
     private void mostrarAlertaActualizacion(String nuevaVersion) {
