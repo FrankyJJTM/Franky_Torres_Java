@@ -13,7 +13,7 @@ import vallegrande.edu.pe.agrofrutoslambayeque.model.UsuarioDao;
 public class LoginView extends Application {
 
     // Define aquí la versión local actual
-    private static final String APP_VERSION = "v1.0.0";
+    private static final String APP_VERSION = "v1.0.1";
 
     @Override
     public void start(Stage stage) {
