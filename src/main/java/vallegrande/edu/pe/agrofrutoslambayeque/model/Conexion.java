@@ -12,15 +12,11 @@ public class Conexion {
     public static Connection getConexion() throws SQLException {
         String pass = System.getenv("DB_PASSWORD");
 
-        // Si no hay variable de entorno, usamos la clave directa
         if (pass == null || pass.trim().isEmpty()) {
-            pass = "AVNS_xMgLrOlqRLAGdN3_LhW";
+            pass = "";
         } else {
             pass = pass.trim();
         }
-
-        // IMPRIMIR PARA VERIFICAR EN CONSOLA (solo para pruebas)
-        System.out.println("CLAVE ENVIADA: [" + pass + "]");
 
         return DriverManager.getConnection(URL, USER, pass);
     }
