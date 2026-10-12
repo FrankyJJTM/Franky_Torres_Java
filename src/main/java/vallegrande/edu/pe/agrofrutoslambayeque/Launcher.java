@@ -10,7 +10,7 @@ import java.io.IOException;
 public class Launcher extends Application {
 
     // Versión fija que tiene este ejecutable .jar local
-    private static final String VERSION_LOCAL = "1.0.1";
+    private static final String VERSION_LOCAL = "1.0.0";
 
     @Override
     public void start(Stage primaryStage) {
@@ -38,7 +38,7 @@ public class Launcher extends Application {
     private String obtenerVersionDesdeNube() {
         // AQUÍ haces la consulta SQL a tu BD en la nube (ej. SELECT valor FROM config WHERE clave = 'version_actual')
         // Por ahora devuelve "1.0.0" para pruebas
-        return "1.0.0";
+        return "1.0.1";
     }
 
     private String obtenerUrlDescargaDesdeNube() {
