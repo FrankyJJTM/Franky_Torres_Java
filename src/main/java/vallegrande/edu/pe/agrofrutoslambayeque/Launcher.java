@@ -9,14 +9,14 @@ import java.io.IOException;
 
 public class Launcher extends Application {
 
-    // Versión fija que tiene este ejecutable .jar local
-    private static final String VERSION_LOCAL = "1.0.0";
+    // Versión local actual configurada a 1.0.1
+    private static final String VERSION_LOCAL = "1.0.1";
 
     @Override
     public void start(Stage primaryStage) {
         // 1. Consultar la versión de la base de datos en la nube
-        String versionNube = obtenerVersionDesdeNube(); // Reemplazar con tu consulta DAO/BD
-        String urlDescarga = obtenerUrlDescargaDesdeNube(); // Reemplazar con tu consulta DAO/BD
+        String versionNube = obtenerVersionDesdeNube();
+        String urlDescarga = obtenerUrlDescargaDesdeNube();
 
         // 2. Comparar versiones
         if (versionNube != null && !VERSION_LOCAL.equals(versionNube)) {
@@ -26,7 +26,7 @@ public class Launcher extends Application {
             return;
         }
 
-        // 3. Si la versión es correcta, abre la interfaz normal
+        // 3. Abrir la interfaz de Login si la versión es la correcta
         try {
             LoginView loginView = new LoginView();
             loginView.start(primaryStage);
@@ -36,13 +36,12 @@ public class Launcher extends Application {
     }
 
     private String obtenerVersionDesdeNube() {
-        // AQUÍ haces la consulta SQL a tu BD en la nube (ej. SELECT valor FROM config WHERE clave = 'version_actual')
-        // Por ahora devuelve "1.0.0" para pruebas
+        // Retorna "1.0.1" para estar alineado con la versión local y evitar el bucle
         return "1.0.1";
     }
 
     private String obtenerUrlDescargaDesdeNube() {
-        // Aquí pegas el enlace directo de la Release que acabas de publicar en GitHub:
+        // Enlace directo del Release v1.0.1 en GitHub
         return "https://github.com/FrankyJJTM/AgrofrutosLambayeque-Desktop/releases/download/v1.0.1/AgrofrutosLambayeque.jar";
     }
 
@@ -64,7 +63,6 @@ public class Launcher extends Application {
     }
 
     public static void main(String[] args) {
-        // Ahora iniciamos la app desde el start() de JavaFX
         launch(args);
     }
 }
