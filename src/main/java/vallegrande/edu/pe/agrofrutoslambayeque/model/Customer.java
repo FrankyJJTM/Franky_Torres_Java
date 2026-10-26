@@ -9,10 +9,13 @@ public class Customer {
     private String mail;
     private String address;
     private Integer documentTypeId;
+    private boolean active;
 
-    public Customer() {}
+    public Customer() {
+        this.active = true; // Por defecto activo
+    }
 
-    public Customer(int customerId, String name, String lastName, String documentNumber, String phone, String mail, String address, Integer documentTypeId) {
+    public Customer(int customerId, String name, String lastName, String documentNumber, String phone, String mail, String address, Integer documentTypeId, boolean active) {
         this.customerId = customerId;
         this.name = name;
         this.lastName = lastName;
@@ -21,6 +24,7 @@ public class Customer {
         this.mail = mail;
         this.address = address;
         this.documentTypeId = documentTypeId;
+        this.active = active;
     }
 
     public int getCustomerId() { return customerId; }
@@ -46,4 +50,7 @@ public class Customer {
 
     public Integer getDocumentTypeId() { return documentTypeId; }
     public void setDocumentTypeId(Integer documentTypeId) { this.documentTypeId = documentTypeId; }
+
+    public boolean isActive() { return active; }
+    public void setActive(boolean active) { this.active = active; }
 }

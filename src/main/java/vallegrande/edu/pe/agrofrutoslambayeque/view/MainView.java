@@ -48,6 +48,7 @@ public class MainView extends Application {
     private TextField txtCliTelefono = crearTextField("Teléfono");
     private TextField txtCliCorreo = crearTextField("Correo electrónico");
     private TextField txtCliDireccion = crearTextField("Dirección");
+    private CheckBox chkCliActivo = new CheckBox("Cliente Activo");
     private Button btnGuardarCliente = new Button("Guardar Cliente");
     private Integer idClienteSeleccionado = null;
 
@@ -211,6 +212,7 @@ public class MainView extends Application {
             c.setPhone(txtCliTelefono.getText());
             c.setMail(txtCliCorreo.getText());
             c.setAddress(txtCliDireccion.getText());
+            c.setActive(chkCliActivo.isSelected());
 
             if (idClienteSeleccionado != null) {
                 c.setCustomerId(idClienteSeleccionado);
@@ -284,7 +286,6 @@ public class MainView extends Application {
         return tf;
     }
 
-    // Helper para generar el encabezado con el botón "Volver a Inicio"
     private HBox crearHeaderModulo(String tituloTexto) {
         Label titulo = new Label(tituloTexto);
         titulo.setStyle("-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #0f172a;");
@@ -301,7 +302,6 @@ public class MainView extends Application {
         return header;
     }
 
-    // --- PANTALLA DE BIENVENIDA CON BOTONES A MÓDULOS CRUD ---
     public void mostrarInicio() {
         VBox contenedorInicio = new VBox(25);
         contenedorInicio.setAlignment(Pos.TOP_CENTER);
@@ -397,6 +397,9 @@ public class MainView extends Application {
         grid.add(new Label("Correo:"), 0, 2); grid.add(txtCliCorreo, 1, 2);
         grid.add(new Label("Dirección:"), 2, 2); grid.add(txtCliDireccion, 3, 2);
 
+        chkCliActivo.setStyle("-fx-font-weight: bold; -fx-text-fill: #1e293b;");
+        grid.add(chkCliActivo, 0, 3, 2, 1);
+
         btnGuardarCliente.setStyle("-fx-background-color: #10b981; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 8 18; -fx-background-radius: 6;");
         formContainer.getChildren().addAll(new Label("Gestión de Cliente"), grid, btnGuardarCliente);
 
@@ -407,8 +410,21 @@ public class MainView extends Application {
             card.setPadding(new Insets(16));
             card.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 8; -fx-border-color: #e2e8f0; -fx-border-radius: 8;");
 
+            // Título de la tarjeta
             Label nom = new Label(c.getName() + " " + c.getLastName() + " (Doc: " + c.getDocumentNumber() + ")");
             nom.setStyle("-fx-font-weight: bold; -fx-font-size: 15px; -fx-text-fill: #1e293b;");
+
+            // Indicador / Badge de Estado (ACTIVO / INACTIVO)
+            Label lblEstado = new Label(c.isActive() ? "ACTIVO" : "INACTIVO");
+            lblEstado.setStyle(c.isActive()
+                    ? "-fx-background-color: #d1fae5; -fx-text-fill: #065f46; -fx-font-weight: bold; -fx-font-size: 11px; -fx-padding: 3 8; -fx-background-radius: 4;"
+                    : "-fx-background-color: #fee2e2; -fx-text-fill: #991b1b; -fx-font-weight: bold; -fx-font-size: 11px; -fx-padding: 3 8; -fx-background-radius: 4;");
+
+            Region spacerCard = new Region();
+            HBox.setHgrow(spacerCard, Priority.ALWAYS);
+
+            HBox titleBox = new HBox(10, nom, spacerCard, lblEstado);
+            titleBox.setAlignment(Pos.CENTER_LEFT);
 
             Label datos = new Label("📞 " + c.getPhone() + "  |  ✉ " + c.getMail() + "  |  📍 " + c.getAddress());
             datos.setStyle("-fx-font-size: 13px; -fx-text-fill: #475569;");
@@ -423,10 +439,11 @@ public class MainView extends Application {
                 txtCliTelefono.setText(c.getPhone());
                 txtCliCorreo.setText(c.getMail());
                 txtCliDireccion.setText(c.getAddress());
+                chkCliActivo.setSelected(c.isActive());
                 btnGuardarCliente.setText("Actualizar Cliente");
             });
 
-            Button btnEliminar = new Button("Eliminar");
+            Button btnEliminar = new Button("Desactivar");
             btnEliminar.setStyle("-fx-background-color: #ef4444; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 4 12; -fx-background-radius: 4;");
             btnEliminar.setOnAction(e -> {
                 new CustomerDao().eliminar(c.getCustomerId());
@@ -435,7 +452,7 @@ public class MainView extends Application {
             });
 
             HBox accionesBox = new HBox(8, btnEditar, btnEliminar);
-            card.getChildren().addAll(nom, datos, accionesBox);
+            card.getChildren().addAll(titleBox, datos, accionesBox);
             contenedorCards.getChildren().add(card);
         }
 
@@ -649,6 +666,7 @@ public class MainView extends Application {
         txtCliTelefono.clear();
         txtCliCorreo.clear();
         txtCliDireccion.clear();
+        chkCliActivo.setSelected(true);
         btnGuardarCliente.setText("Guardar Cliente");
     }
 

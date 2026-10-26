@@ -6,18 +6,11 @@ import java.sql.SQLException;
 
 public class Conexion {
 
-    private static final String URL = "jdbc:mysql://mysql-agrofrutos-mysql-db-2.a.aivencloud.com:19732/agrofrutos_db_2?sslMode=REQUIRED";
-    private static final String USER = "avnadmin";
+    private static final String URL = "jdbc:mysql://127.0.0.1:3307/agrofrutos_db_2";
+    private static final String USER = "root";
+    private static final String PASS = "12345";
 
     public static Connection getConexion() throws SQLException {
-        String pass = System.getenv("DB_PASSWORD");
-
-        if (pass == null || pass.trim().isEmpty()) {
-            pass = "";
-        } else {
-            pass = pass.trim();
-        }
-
-        return DriverManager.getConnection(URL, USER, pass);
+        return DriverManager.getConnection(URL, USER, PASS);
     }
 }

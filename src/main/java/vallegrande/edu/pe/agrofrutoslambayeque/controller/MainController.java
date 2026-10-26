@@ -30,9 +30,7 @@ public class MainController {
         view.getBtnCancelarEdicion().setOnAction(e -> view.limpiarFormulario());
 
         view.getBtnBuscar().setOnAction(e -> buscarContactos());
-        view.getBtnLimpiarBusqueda().setOnAction(e -> {
-            cargarListaContactos();
-        });
+        view.getBtnLimpiarBusqueda().setOnAction(e -> cargarListaContactos());
 
         // Evento para Eliminar Todos los contactos
         if (view.getBtnEliminarTodos() != null) {

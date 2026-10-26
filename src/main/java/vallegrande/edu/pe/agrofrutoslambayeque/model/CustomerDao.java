@@ -22,6 +22,7 @@ public class CustomerDao {
                 c.setMail(rs.getString("Mail"));
                 c.setAddress(rs.getString("Address"));
                 c.setDocumentTypeId(rs.getObject("Document_Type_ID") != null ? rs.getInt("Document_Type_ID") : null);
+                c.setActive(rs.getBoolean("Active"));
                 lista.add(c);
             }
         } catch (SQLException e) {
@@ -31,7 +32,7 @@ public class CustomerDao {
     }
 
     public boolean guardar(Customer c) {
-        String sql = "INSERT INTO Customer (Name, Last_Name, Document_Number, Phone, Mail, Address, Document_Type_ID) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Customer (Name, Last_Name, Document_Number, Phone, Mail, Address, Document_Type_ID, Active) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection con = Conexion.getConexion();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
@@ -57,6 +58,7 @@ public class CustomerDao {
             }
 
             ps.setInt(7, docTypeId);
+            ps.setBoolean(8, c.isActive());
 
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -66,7 +68,7 @@ public class CustomerDao {
     }
 
     public boolean actualizar(Customer c) {
-        String sql = "UPDATE Customer SET Name = ?, Last_Name = ?, Document_Number = ?, Phone = ?, Mail = ?, Address = ? WHERE Customer_ID = ?";
+        String sql = "UPDATE Customer SET Name = ?, Last_Name = ?, Document_Number = ?, Phone = ?, Mail = ?, Address = ?, Active = ? WHERE Customer_ID = ?";
         try (Connection con = Conexion.getConexion();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, c.getName());
@@ -75,7 +77,8 @@ public class CustomerDao {
             ps.setString(4, c.getPhone());
             ps.setString(5, c.getMail());
             ps.setString(6, c.getAddress());
-            ps.setInt(7, c.getCustomerId());
+            ps.setBoolean(7, c.isActive());
+            ps.setInt(8, c.getCustomerId());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -83,11 +86,26 @@ public class CustomerDao {
         }
     }
 
+    // Desactivar cliente (Borrado Lógico)
     public boolean eliminar(int id) {
-        String sql = "DELETE FROM Customer WHERE Customer_ID = ?";
+        String sql = "UPDATE Customer SET Active = FALSE WHERE Customer_ID = ?";
         try (Connection con = Conexion.getConexion();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, id);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // Permite cambiar el estado de un cliente dinámicamente (Activar/Desactivar)
+    public boolean cambiarEstado(int id, boolean estado) {
+        String sql = "UPDATE Customer SET Active = ? WHERE Customer_ID = ?";
+        try (Connection con = Conexion.getConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setBoolean(1, estado);
+            ps.setInt(2, id);
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
